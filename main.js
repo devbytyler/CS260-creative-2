@@ -10,7 +10,8 @@ $(document).ready(function() {
                 .attr('src', e.target.result)
                 .width(150)
                 .height(200);
-                // console.log(e.target.result.substring(0,1000))
+                imgData = e.target.result.substring(0,500)
+                console.log(imgData)
                 // TODO: enable the convert button
             };
             reader.readAsDataURL(file);
@@ -19,5 +20,23 @@ $(document).ready(function() {
 })
 
 function convert(){
-//fire this when a user is ready to convert their image, only if there is an image attached
+    if (imgData){
+        var myurl = "https://robohash.org/";
+        myurl += imgData;
+        $.ajax({
+            url: myurl,
+            type: 'get',
+            dataType: 'html',
+            async: false,
+            crossDomain: 'true',
+            success: function(result) {
+                console.log("success")
+                console.log(result)
+            },
+            error: function(result){
+                console.log(result)
+                console.log("failure")
+            }
+        });
+    }
 }
