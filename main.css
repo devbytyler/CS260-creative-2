@@ -1,5 +1,11 @@
+body {
+ background-image: url("background.jpg");
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+
 .main-card {
-    max-width: 500px;
+    max-width: 600px;
     margin: 20px auto;
 }
 
