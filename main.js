@@ -7,9 +7,7 @@ $(document).ready(function() {
             var reader = new FileReader();
             reader.onload = function (e) {
                 $('#image').attr('src', e.target.result);
-                imgData = e.target.result.substring(0,500)
-                console.log(imgData)
-                // TODO: enable the convert button
+                imgData = e.target.result.substring(0, 1000)
             };
             reader.readAsDataURL(file);
         }
@@ -20,11 +18,12 @@ function convert(){
     if (imgData){
         var myurl = "https://robohash.org/";
         myurl += imgData;
+        console.log(myurl)
         $.ajax({
             type: "GET",
             url: myurl,
             beforeSend: function (xhr) {
-            xhr.overrideMimeType('text/plain; charset=x-user-defined');
+                xhr.overrideMimeType('text/plain; charset=x-user-defined');
             },
             success: function (result, textStatus, jqXHR) {       
                 if(result.length < 1){
