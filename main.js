@@ -1,5 +1,5 @@
 var imgData = '';
-
+var convertType = 1;
 $(document).ready(function() {
     $('#imageInput').change((event)=>{
         file = event.target.files[0]
@@ -14,10 +14,38 @@ $(document).ready(function() {
     })
 })
 
+
+function changeToMonster() {
+    convertType = 2;
+    convert();
+}
+
+function changeToCat() {
+    convertType = 4;
+    convert();
+}
+
+function changeToRobot() {
+    convertType = 1;
+    convert();
+}
+
 function convert(){
     if (imgData){
         var myurl = "https://robohash.org/";
         myurl += imgData;
+        //cat
+        if (convertType == 4) {
+            myurl += "?set=set4";
+        }
+        //monster
+        else if (convertType == 2) {
+            myurl += "?set=set2";
+        }
+        //robot is the default
+        else {
+            //do nothing
+        }
         console.log(myurl)
         $.ajax({
             type: "GET",
