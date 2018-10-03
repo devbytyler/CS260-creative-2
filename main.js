@@ -6,10 +6,7 @@ $(document).ready(function() {
         if (file) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#uploaded')
-                .attr('src', e.target.result)
-                .width(150)
-                .height(200);
+                $('#image').attr('src', e.target.result);
                 imgData = e.target.result.substring(0,500)
                 console.log(imgData)
                 // TODO: enable the convert button
@@ -24,19 +21,30 @@ function convert(){
         var myurl = "https://robohash.org/";
         myurl += imgData;
         $.ajax({
+            type: "GET",
             url: myurl,
-            type: 'get',
-            dataType: 'html',
-            async: false,
-            crossDomain: 'true',
-            success: function(result) {
-                console.log("success")
-                console.log(result)
+            beforeSend: function (xhr) {
+            xhr.overrideMimeType('text/plain; charset=x-user-defined');
             },
-            error: function(result){
-                console.log(result)
-                console.log("failure")
-            }
+            success: function (result, textStatus, jqXHR) {       
+                if(result.length < 1){
+                    alert("The robot doesn't exist");
+                    $("#image").attr("src", "data:image/png;base64,");
+                    return
+                }
+            
+                var binary = "";
+                var responseText = jqXHR.responseText;
+                var responseTextLen = responseText.length;
+            
+                for ( i = 0; i < responseTextLen; i++ ) {
+                    binary += String.fromCharCode(responseText.charCodeAt(i) & 255)
+                }
+                $("#image").attr("src", "data:image/png;base64,"+btoa(binary));
+                },
+                error: function(xhr, textStatus, errorThrown){
+                alert("Error in getting document "+textStatus);
+            } 
         });
     }
 }

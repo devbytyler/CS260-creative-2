@@ -3,6 +3,13 @@
     margin: 20px auto;
 }
 
-.image {
-    height: 200px;
+#image {
+    height: 300px;
+    margin: auto;
 }
+
+.card-body {
+    display: flex;
+    justify-content: center;
+}
+
