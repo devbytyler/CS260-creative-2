@@ -10,7 +10,7 @@ $(document).ready(function() {
                 .attr('src', e.target.result)
                 .width(150)
                 .height(200);
-                imgData = e.target.result.substring(0,500)
+                imgData = e.target.result.substring(0, 10)
                 console.log(imgData)
                 // TODO: enable the convert button
             };
@@ -31,7 +31,11 @@ function convert(){
             crossDomain: 'true',
             success: function(result) {
                 console.log("success")
-                console.log(result)
+                console.log(result);
+                var returnedData = result;
+                var conversion = btoa(unescape(encodeURIComponent(returnedData)));;
+                $('#outputImg').attr('src', 'data:image/png;base64,'+ conversion);
+              
             },
             error: function(result){
                 console.log(result)
